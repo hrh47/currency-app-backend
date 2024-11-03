@@ -1,6 +1,6 @@
-import axios from 'axios/dist/node/axios.cjs';
-const cheerio = require('cheerio');
-const moment = require('moment-timezone');
+import axios from 'axios';
+import * as cheerio from 'cheerio';
+import moment from 'moment-timezone';
 
 const parseHtml = (html) => {
   const $ = cheerio.load(html);
@@ -59,4 +59,4 @@ const getExchangeRate = async () => {
   return exchangeRateCache.data;
 };
 
-module.exports = getExchangeRate;
+export default getExchangeRate;

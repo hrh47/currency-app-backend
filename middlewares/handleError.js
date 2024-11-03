@@ -13,4 +13,4 @@ const handleError = async (ctx, next) => {
   }
 };
 
-module.exports = handleError;
+export default handleError;

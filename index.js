@@ -1,11 +1,11 @@
-const Koa = require('koa');
-const Router = require('@koa/router');
-const bodyParser = require('koa-bodyparser');
-const cors = require('@koa/cors');
+import Koa from 'koa';
+import Router from '@koa/router';
+import bodyParser from 'koa-bodyparser';
+import cors from '@koa/cors';
 
-const validateQuery = require('./middlewares/validateQuery');
-const getExchangeRate = require('./getExchangeRates');
-const handleError = require('./middlewares/handleError');
+import validateQuery from './middlewares/validateQuery.js';
+import handleError from './middlewares/handleError.js';
+import getExchangeRate from './getExchangeRates.js';
 
 const app = new Koa();
 const router = new Router();

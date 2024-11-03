@@ -1,4 +1,4 @@
-const Joi = require('joi');
+import Joi from 'joi';
 
 const validCurrencyCodes = [
   'TWD',
@@ -42,4 +42,4 @@ const validateQuery = async (ctx, next) => {
   await next();
 };
 
-module.exports = validateQuery;
+export default validateQuery;
