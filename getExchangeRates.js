@@ -1,4 +1,4 @@
-const axios = require('axios');
+import axios from 'axios/dist/node/axios.cjs';
 const cheerio = require('cheerio');
 const moment = require('moment-timezone');
 
