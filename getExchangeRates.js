@@ -42,10 +42,21 @@ const parseHtml = (html) => {
   };
 };
 
+const CACHE_DURATION = 5 * 60 * 1000;
+const exchangeRateCache = { data: null, timestamp: null };
+
 const getExchangeRate = async () => {
+  if (exchangeRateCache.data && Date.now() - exchangeRateCache.timestamp < CACHE_DURATION) {
+    return exchangeRateCache.data;
+  }
+
   const response = await axios.get('https://rate.bot.com.tw/xrt?Lang=zh-tw');
   const html = response.data;
-  return parseHtml(html);
+
+  exchangeRateCache.data = parseHtml(html);
+  exchangeRateCache.timestamp = Date.now();
+
+  return exchangeRateCache.data;
 };
 
 module.exports = getExchangeRate;

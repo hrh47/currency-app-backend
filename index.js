@@ -19,7 +19,7 @@ router.get('/exchange-rate', validateQuery, async (ctx) => {
     base_currency: baseCurrency,
     target_currency: targetCurrency,
     exchange_rate: rates[baseCurrency] / rates[targetCurrency],
-    timestamp: quotedDate
+    quoted_date: quotedDate
   };
 });
 
