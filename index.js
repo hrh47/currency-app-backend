@@ -2,16 +2,58 @@ const Koa = require('koa');
 const Router = require('@koa/router');
 const bodyParser = require('koa-bodyparser');
 const cors = require('@koa/cors');
+const Joi = require('joi');
 
 const app = new Koa();
 const router = new Router();
 
+const rates = {
+  TWD: 1,
+  USD: 31.565,
+  HKD: 3.954,
+  GBP: 40.04,
+  AUD: 20.59,
+  CAD: 22.44,
+  SGD: 23.57,
+  CHF: 36.05,
+  JPY: 0.2007,
+  ZAR: 1.766,
+  SEK: 2.92,
+  NZD: 18.61,
+  THB: 0.815,
+  PHP: 0.4815,
+  IDR: 0.00168,
+  EUR: 33.95,
+  KRW: 0.02146,
+  VND: 0.00104,
+  MYR: 6.266,
+  CNY: 4.385
+};
+
+const querySchema = Joi.object({
+  base_currency: Joi.string()
+    .valid(...Object.keys(rates))
+    .required(),
+  target_currency: Joi.string()
+    .valid(...Object.keys(rates))
+    .required()
+});
+
 router.get('/exchange-rate', async (ctx) => {
+  const { value, error } = querySchema.validate(ctx.query);
+
+  if (error) {
+    error.statusCode = 400;
+    throw error;
+  }
+
+  const { base_currency: baseCurrency, target_currency: targetCurrency } = value;
+
   ctx.status = 200;
   ctx.body = {
-    base_currency: 'TWD',
-    target_currency: 'USD',
-    exchange_rate: 0.03102,
+    base_currency: baseCurrency,
+    target_currency: targetCurrency,
+    exchange_rate: rates[baseCurrency] / rates[targetCurrency],
     timestamp: new Date()
   };
 });
